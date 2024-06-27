@@ -17,7 +17,7 @@
 ## 具体方法
 ### 基础方法
 1. 维护一个可训练的embedding矩阵$P$，形状为：prefix的长度×hidden_dim。
-2. 在每一层transformer的输入中，查表($P$)，将每个prefix的embedding加到输入的token序列前面；后续流程与正常情况相同。
+2. 在**每一层**transformer的输入中，查表($P$)，将每个prefix的embedding加到输入的token序列前面；后续流程与正常情况相同。注意：每一层加入的prefix是相同的。
 3. 反向传播时，冻结LLM参数，仅更新embedding矩阵$P$。
 
 ### 改进
