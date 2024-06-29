@@ -32,7 +32,7 @@
 1. 将encoding阶段获得的句子embedding重复N份，变成长度为N的序列，并加上位置编码，作为decoder的其中一个输入$H_1$。
 2. 将encoding阶段获得的句子embedding，和输入文本序列（没有mask）拼接，组成长度为N的序列，并加上位置编码，作为decoder的第二个输入$H_2$。
 3. decoder做attention计算时，$H_1$作为$Q$，$H_2$作为$K$和$V$。
-4. 使用mask矩阵把attention矩阵mask掉，逻辑如下：每个token能看到的token都是通过采样得到的，且都能看到首个token，因为首个token是encoder产出的句子embedding的信息。
+4. 使用mask矩阵把attention矩阵mask掉，逻辑如下：每个token能看到的token都是通过采样得到的（看不到自己），且都能看到首个token，因为首个token是encoder产出的句子embedding的信息。
 5. 用enhanced decoding生成的向量做句子重建，使用所有被mask的token与真实词的交叉熵的和作为decoding阶段的损失$L_{dec}$。
 ### Loss
 训练loss即为上述的$L_{enc} + L_{dec}$。
