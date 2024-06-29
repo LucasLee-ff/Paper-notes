@@ -9,10 +9,10 @@
 提出了全新的、针对检索（Retrieval oriented）的向量模型预训练范式，并且使用的是MAE：
 1. 训练时使用mask过的文本输入encoder，得到句子embedding；再次对文本输入mask后，与句子embedding拼接，共同输入decoder，得到重建后的句子。
 2. 使用非对称模型结构：encoder是类似BERT的架构，decoder仅为单层transformer。
-3. 非对称masking比例：mask掉原始输入文本的15~30%，输入decoder前mask掉原始输入文本的50~70%。
+3. 非对称masking比例：mask掉原始输入文本的15-30%，输入decoder前mask掉原始输入文本的50-70%。
 
 ## 核心思想
-- 针对检索场景，向量模型产生的向量必须能够表达足够的sentence-level的语义信息，因此decoding阶段应该足够困难，从而促使encoder能够学得更好。因此，decoding阶段，输入文本才会被非常激进地mask掉了50~70%。
+- 针对检索场景，向量模型产生的向量必须能够表达足够的sentence-level的语义信息，因此decoding阶段应该足够困难，从而促使encoder能够学得更好。因此，decoding阶段，输入文本才会被非常激进地mask掉了50-70%。
 
 ## 具体方法
 ### Encoding
