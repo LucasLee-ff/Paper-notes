@@ -19,7 +19,7 @@
 - 分阶段，先让LLM从文本片段中找到所有的实体 (包括其名称、类型、描述)，然后再识别出实体之间的关系 (包括头节点、目标节点、关系描述)。
 - 抽取的prompt中如果加入few-shot例子，有助于在特定的领域任务提升效果 (如法律、医疗等领域)。
 - 使用二次抽取prompt来提取节点相关的信息 (论文中称为covariates，协变量)，比如节点的描述、原文本范围、开始结束日期等 (论文中的表述为：covariate prompt aims to extract claims linked to detected entities, including the subject, object, type， description, source text span, and start and end dates)
-- 如上文提到，太长的文本chunk可能会导致LLM漏掉许多信息，因此作者使用了多轮抽取的策略：每次抽取后，评估一下是否已经将所有实体抽取完了。如果没有，再次提示LLM继续抽取。这个策略在论文中被称为**gleanings**。此策略能使用更大的chunk size，同时效果也能保持不变。
+- 如上文提到，太长的文本chunk可能会导致LLM漏掉许多信息，因此作者使用了多轮抽取的策略：每次抽取后，评估一下是否已经将所有实体抽取完了。如果没有，再次提示LLM继续抽取。这个策略在论文中被称为**gleanings**。此策略能在使用更大chunk size的同时，抽取效果保持不变。
 
 ### 3. Element Instances → Element Summaries
 **通过LLM，为上述步骤提取到的实体、关系等图元素生成文字描述**
