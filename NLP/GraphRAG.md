@@ -45,7 +45,7 @@
  - 重复上述步骤直至所有内容能够放入LLM的上下文窗口。
 
 ### 6. Community Summaries → Community Answers → Global Answer
-**根据多个community summary生成多个中间答案，然后汇总中间答案生成最终答案**
+**根据多个community summary生成多个中间答案，然后汇总中间答案生成最终答案**  
 对于一个给定的社区层级：
 - 将所有community summary随机打乱，并且切分为多个预设大小的chunk。该步骤主要是保证与问题相关的信息不会过分集中在某一个上下文窗口中，从而造成信息丢失丢失 (可能还是跟lost in the middle的现象相关，即所有信息放在一大段中，LLM回答时直接漏掉中间信息)。
 - 根据每一个chunk，都生成一个针对query的中间答案 (intermediate answer)，同时模型需要对这个答案打分 (0-100)，用于表示该答案对生成最终答案的帮助程度。0分答案直接过滤。
