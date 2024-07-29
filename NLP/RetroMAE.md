@@ -17,7 +17,7 @@
 ## 具体方法
 ### Encoding
 1. 随机用特殊token把输入文本mask掉，然后输入BERT（12层，hidden_dim=768）。
-2. 最终输出的[CLS] token作为整句的embedding。
+2. 最终输出的**[CLS] token作为整句的embedding**。
 3. 像BERT一样预测被mask的token，计算损失，得到$L_{enc}$
 ### Decoding
 1. 再次对输入文本进行mask，然后将输入文本的encoder得到的句子embedding与输入文本的embedding进行拼接，送进单层transformer。
@@ -29,8 +29,9 @@
 2. 每个被mask的token在重建时都基于同一个上下文信息，也就是说在经过decoder得到一个hidden state后，所有token的重建都是基于这个hidden state的。
 
 基于此，提出了新的enhanced decoding：
-1. 将encoding阶段获得的句子embedding重复N份，变成长度为N的序列，并加上位置编码，作为decoder的其中一个输入$H_1$。
-2. 将encoding阶段获得的句子embedding，和输入文本序列（没有mask）拼接，组成长度为N的序列，并加上位置编码，作为decoder的第二个输入$H_2$。
+**假设输入的token序列长度为$N-1$**
+1. 将encoding阶段获得的句子embedding重复$N$份，变成长度为$N$的序列，并加上位置编码，作为decoder的其中一个输入$H_1$。
+2. 将encoding阶段获得的句子embedding (也就是前面得到的[CLS] token)，和输入的token序列（没有mask）拼接，组成长度为$N$的序列，并加上位置编码，作为decoder的第二个输入$H_2$。
 3. decoder做attention计算时，$H_1$作为$Q$，$H_2$作为$K$和$V$。
 4. 使用mask矩阵把attention矩阵mask掉，逻辑如下：每个token能看到的token都是通过采样得到的（看不到自己），且都能看到首个token，因为首个token是encoder产出的句子embedding的信息。
 5. 用enhanced decoding生成的向量做句子重建，使用所有被mask的token与真实词的交叉熵的和作为decoding阶段的损失$L_{dec}$。
